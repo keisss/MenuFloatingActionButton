@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MenuView">
+        <attr name="item_text" format="string"/>
+        <attr name="item_icon" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="MenuFloatingActionButton">
+        <attr name="background_color" format="color"/>
+        <attr name="fab_background_color" format="color"/>
+        <attr name="fab_src" format="reference"/>
+        <attr name="animator_duration" format="integer"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <cn.keiss.menufab.view.MenuFloatingActionButton
+        android:id="@+id/eer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:background_color="@color/colorPrimary"
+        app:fab_background_color="#DB4537"
+        app:fab_src="@drawable/ic_android_black_24dp"
+        app:animator_duration="140"
+        >
+        <cn.keiss.menufab.view.MenuView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:item_text = "43432"
+            app:item_icon="@drawable/ic_android_black_24dp"
+            />
+        <cn.keiss.menufab.view.MenuView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:item_text = "1323412351235234"
+            app:item_icon="@drawable/ic_arrow_downward_black_24dp"
+            />
+        <cn.keiss.menufab.view.MenuView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:item_text = "1323412351235234"
+            app:item_icon="@drawable/ic_arrow_downward_black_24dp"
+            />
+        <cn.keiss.menufab.view.MenuView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:item_text = "1323412351235234"
+            app:item_icon="@drawable/ic_arrow_downward_black_24dp"
+            />
+        <cn.keiss.menufab.view.MenuView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:item_text = "1323412351235234"
+            app:item_icon="@drawable/ic_arrow_downward_black_24dp"
+            />
+        <cn.keiss.menufab.view.MenuView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:item_text = "1323412351235234"
+            app:item_icon="@drawable/ic_arrow_downward_black_24dp"
+            />
+        <cn.keiss.menufab.view.MenuView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:item_text = "1323412351235234"
+            app:item_icon="@drawable/ic_arrow_downward_black_24dp"
+            />
+        <cn.keiss.menufab.view.MenuView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:item_text = "1323412351235234"
+            app:item_icon="@drawable/ic_arrow_downward_black_24dp"
+            />
+        <cn.keiss.menufab.view.MenuView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:item_text = "1323412351235234"
+            app:item_icon="@drawable/ic_arrow_downward_black_24dp"
+            />
+        <cn.keiss.menufab.view.MenuView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:item_text = "1323412351235234"
+            app:item_icon="@drawable/ic_arrow_downward_black_24dp"
+            />
+        <cn.keiss.menufab.view.MenuView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:item_text = "1323412351235234"
+            app:item_icon="@drawable/ic_arrow_downward_black_24dp"
+            />
+    </cn.keiss.menufab.view.MenuFloatingActionButton>
+</RelativeLayout>
