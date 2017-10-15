@@ -1,9 +1,5 @@
 package cn.keiss.menufab.view;
 
-/**
- * Created by hekai on 2017/10/13.
- */
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -52,7 +48,6 @@ public class MenuFloatingActionButton extends ViewGroup{
     private int mAnimationDuration;
     private float mFabRotateVal = 45F;
     private int mBackgroundColor;
-    private boolean mFirstEnter=true ;
 
     private OnFloatActionButtonClickListener mFabClickListener;
     private OnMenuItemClickListener mMenuItemClickListener;
@@ -100,6 +95,12 @@ public class MenuFloatingActionButton extends ViewGroup{
     }
 
     @Override
+    public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs)
+    {
+        return new MarginLayoutParams(getContext(), attrs);
+    }
+
+    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int childCount = getChildCount();
         for (int i =0;i<childCount;i++){
@@ -107,10 +108,6 @@ public class MenuFloatingActionButton extends ViewGroup{
         }
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        ViewGroup.LayoutParams params = getLayoutParams();
-        params.width = getMeasuredWidth();
-        params.height = getMeasuredHeight();
-        setLayoutParams(params);
     }
 
     @Override

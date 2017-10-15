@@ -51,6 +51,8 @@ public class MenuView extends ViewGroup {
         super(context, attrs, defStyleAttr);
         getAttrs(context,attrs);
         setViews(context);
+
+
     }
 
     private void getAttrs(Context context, AttributeSet attributeSet){
@@ -85,6 +87,7 @@ public class MenuView extends ViewGroup {
         params.width = groupWidth;
         params.height = groupHeight;
         setLayoutParams(params);
+
 
     }
 
