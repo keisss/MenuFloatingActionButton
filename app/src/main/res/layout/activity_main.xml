@@ -10,7 +10,7 @@
         android:id="@+id/eer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:background_color="@color/colorPrimary"
+        app:background_color="#ffffff"
         app:fab_background_color="#DB4537"
         app:fab_src="@drawable/ic_android_black_24dp"
         app:animator_duration="140"

@@ -105,6 +105,7 @@ public class MenuFloatingActionButton extends ViewGroup{
         for (int i =0;i<childCount;i++){
             measureChild(getChildAt(i),widthMeasureSpec,heightMeasureSpec);
         }
+
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         ViewGroup.LayoutParams params = getLayoutParams();
         params.width = getMeasuredWidth();
@@ -130,7 +131,6 @@ public class MenuFloatingActionButton extends ViewGroup{
         int fabWidth = mFab.getMeasuredWidth();
         int fabHeight = mFab.getMeasuredHeight();
 
-
         t = getMeasuredHeight()- fabHeight -t;
         l = getMeasuredWidth()-fabWidth-l;
 
@@ -144,16 +144,19 @@ public class MenuFloatingActionButton extends ViewGroup{
 
     private void layoutChild(){
         int childCount = getChildCount() ;
+        int center = mFab.getRight() -(mFab.getRight()-mFab.getLeft())/2;
         for (int i=2;i<childCount;i++){
             MenuView menuView = (MenuView) getChildAt(i);
 
             menuView.setVisibility(INVISIBLE);
+
             int childHeight = menuView.getMeasuredHeight();
             int childWidth = menuView.getMeasuredWidth();
             int fabHeight = mFab.getMeasuredHeight();
             int l; int t ;
-            t = getMeasuredHeight() -( fabHeight +childHeight*(i+1));
-            l = getMeasuredWidth()-childWidth;
+            t = getMeasuredHeight() -( fabHeight +childHeight*(i-1))-px2Dp(24);
+            l = getMeasuredWidth()-childWidth -px2Dp(16);
+            menuView.setCenterOfMainFabLeft(center);
             menuView.layout(l,t,l+childWidth,t+childHeight);
             setMenuItemClickListener(menuView,i);
             setAnimStart(menuView);

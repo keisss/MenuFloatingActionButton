@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -26,7 +27,7 @@ import static cn.keiss.menufab.fields.Finals.ON_RIGHT;
 
 public class MenuView extends ViewGroup {
     private TextView tvMenuText;
-    private ImageView ivMenuIcon;
+    private FloatingActionButton fabMenuIcon;
 
     private String mItemText;
     private Drawable mItemIcon;
@@ -35,6 +36,8 @@ public class MenuView extends ViewGroup {
     private int lRPosition = ON_LEFT;
 
     private MenuItemClickListener onClickListener;
+
+    private int centerOfMainFabLeft = 0;
 
     public MenuView(Context context) {
         super(context);
@@ -59,11 +62,30 @@ public class MenuView extends ViewGroup {
 
     private void setViews(Context context){
         tvMenuText = new TextView(context);
-        ivMenuIcon = new ImageView(context);
+        fabMenuIcon = new FloatingActionButton(context);
+        fabMenuIcon.setSize(FloatingActionButton.SIZE_MINI);
         tvMenuText.setText(mItemText);
-        ivMenuIcon.setImageDrawable(mItemIcon);
+        fabMenuIcon.setImageDrawable(mItemIcon);
         addView(tvMenuText);
-        addView(ivMenuIcon);
+        addView(fabMenuIcon);
+    }
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int ChildCount = getChildCount();
+
+        for (int i = 0; i < ChildCount; i++) {
+            measureChild(getChildAt(i), widthMeasureSpec, heightMeasureSpec);
+        }
+
+
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int groupWidth = getChildAt(0).getMeasuredWidth() + getChildAt(1).getMeasuredWidth() +px2Dp(30);
+        int groupHeight = Math.max(getChildAt(0).getMeasuredHeight(), getChildAt(1).getMeasuredHeight())+px2Dp(12);
+        ViewGroup.LayoutParams params =  getLayoutParams();
+        params.width = groupWidth;
+        params.height = groupHeight;
+        setLayoutParams(params);
+
     }
 
     @Override
@@ -85,16 +107,17 @@ public class MenuView extends ViewGroup {
             int ivl = 0; int ivt = 0; int ivr = 0; int ivb = 0;
             switch (lRPosition){
                 case ON_LEFT:
-                    ivl = tvWidth + px2Dp(16);
+                    ivl = centerOfMainFabLeft - ivWidth/2 - getLeft();
                     ivr = ivl+ ivWidth;
-                    ivb = ivHeight;
-                    tvl = px2Dp(8);
+                    ivt = px2Dp(6);
+                    ivb = ivHeight+ivt;
+                    tvl = ivl - px2Dp(8)- tvWidth;
                     tvr = tvl+tvWidth;
-                    tvt = (ivHeight - tvHeight) /2;
+                    tvt = ivt+(ivHeight - tvHeight) /2;
                     tvb = tvt + tvHeight;
                     break;
                 case ON_RIGHT:
-                    ivl = px2Dp(8);
+                    ivl = centerOfMainFabLeft -ivWidth/2;
                     ivr = ivl+ivWidth;
                     ivb = ivHeight;
                     tvl = ivr+px2Dp(8);
@@ -110,23 +133,6 @@ public class MenuView extends ViewGroup {
 
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int ChildCount = getChildCount();
-
-        for (int i = 0; i < ChildCount; i++) {
-            measureChild(getChildAt(i), widthMeasureSpec, heightMeasureSpec);
-        }
-
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int groupWidth = getChildAt(0).getMeasuredWidth() + getChildAt(1).getMeasuredWidth() + px2Dp(24 + 8 + 8);
-        int groupHeight = Math.max(getChildAt(0).getMeasuredHeight(), getChildAt(1).getMeasuredHeight())+px2Dp(12);
-        ViewGroup.LayoutParams params =  getLayoutParams();
-        params.width = groupWidth;
-        params.height = groupHeight;
-        setLayoutParams(params);
-
-    }
 
     /**
      * 给打开的菜单item设置文字，在xml用itemText设置
@@ -148,7 +154,7 @@ public class MenuView extends ViewGroup {
      */
     public void setMenuItemIcon(Drawable drawable){
         try {
-            ivMenuIcon.setImageDrawable(drawable);
+            fabMenuIcon.setImageDrawable(drawable);
         }catch (NullPointerException o){
             Log.e("设置的菜单item的Drawable为null",o.toString());
         }
@@ -167,8 +173,8 @@ public class MenuView extends ViewGroup {
      * 获取菜单item的imageView
      * @return imageView
      */
-    public ImageView getMenuItemImageView(){
-        return ivMenuIcon;
+    public FloatingActionButton getMenuItemImageView(){
+        return fabMenuIcon;
     }
 
     /**
@@ -205,5 +211,13 @@ public class MenuView extends ViewGroup {
                 }
             }
         });
+    }
+
+    /**
+     *  设置主fab的中间位置
+     * @param centerOfMainFab fab中间位置距左方位置
+     */
+    protected void setCenterOfMainFabLeft(int centerOfMainFab){
+        this.centerOfMainFabLeft = centerOfMainFab;
     }
 }
