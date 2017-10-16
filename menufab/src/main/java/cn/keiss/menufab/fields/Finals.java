@@ -2,6 +2,7 @@ package cn.keiss.menufab.fields;
 
 /**
  * Created by hekai on 2017/10/13.
+ * 常量
  */
 
 public class Finals {
