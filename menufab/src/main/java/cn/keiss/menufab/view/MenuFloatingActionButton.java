@@ -14,6 +14,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
@@ -48,6 +49,7 @@ public class MenuFloatingActionButton extends ViewGroup{
     private int mAnimationDuration;
     private float mFabRotateVal = 45F;
     private int mBackgroundColor;
+    private boolean isMenuEnable = true;
 
     private OnFloatActionButtonClickListener mFabClickListener;
     private OnMenuItemClickListener mMenuItemClickListener;
@@ -122,6 +124,9 @@ public class MenuFloatingActionButton extends ViewGroup{
 
     }
 
+
+
+
     private void layoutFab(){
         int l = px2Dp(16);
         int t = px2Dp(16);
@@ -137,6 +142,8 @@ public class MenuFloatingActionButton extends ViewGroup{
 
     private void layoutBackView(){
         mBackView.layout(0,0,getMeasuredWidth(),getMeasuredHeight());
+        mBackView.setVisibility(GONE);
+        mBackView.setEnabled(false);
     }
 
     private void layoutChild(){
@@ -155,7 +162,7 @@ public class MenuFloatingActionButton extends ViewGroup{
             l = getMeasuredWidth()-childWidth -px2Dp(16);
             menuView.setCenterOfMainFabLeft(center);
             menuView.layout(l,t,l+childWidth,t+childHeight);
-            setMenuItemClickListener(menuView,i);
+            setMenuItemClickListener(menuView,i-2);
             setAnimStart(menuView);
         }
 
@@ -166,16 +173,18 @@ public class MenuFloatingActionButton extends ViewGroup{
         mFab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (menuStatus){
-                    closeMenu();
-                    hideBackView();
-                    rotateFabSrc();
-                    changeMenuStatus();
-                }else {
-                    openMenu();
-                    showBackView();
-                    rotateFabSrc();
-                    changeMenuStatus();
+                if (isMenuEnable) {
+                    if (menuStatus) {
+                        closeMenu();
+                        hideBackView();
+                        rotateFabSrc();
+                        changeMenuStatus();
+                    } else {
+                        openMenu();
+                        showBackView();
+                        rotateFabSrc();
+                        changeMenuStatus();
+                    }
                 }
                 if (mFabClickListener !=null){
                     mFabClickListener.onClick();
@@ -190,16 +199,16 @@ public class MenuFloatingActionButton extends ViewGroup{
 
     //为item设置点击事件
     private void setMenuItemClickListener(final MenuView view, final int position){
-        view.setMenuItemClickListener(new MenuItemClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick() {
+            public void onClick(View v) {
                 closeMenu();
                 hideBackView();
                 rotateFabSrc();
                 changeMenuStatus();
                 if (null !=mMenuItemClickListener){
                     mMenuItemClickListener.onClick(view,position);
-                }
+                  }
             }
         });
 
@@ -217,6 +226,26 @@ public class MenuFloatingActionButton extends ViewGroup{
         animator.setDuration(mAnimationDuration);
         animator.setInterpolator(new BounceInterpolator());
         animator.start();
+    }
+
+    public void rotateFabClose(){
+        ObjectAnimator animator =  ObjectAnimator.ofFloat(mFab,"rotation", mFabRotateVal,0f);
+        animator.setDuration(mAnimationDuration);
+        animator.setInterpolator(new BounceInterpolator());
+        animator.start();
+    }
+    public void rotateFabOpen(){
+        ObjectAnimator animator =  ObjectAnimator.ofFloat(mFab,"rotation",0f, mFabRotateVal);
+        animator.setDuration(mAnimationDuration);
+        animator.setInterpolator(new BounceInterpolator());
+        animator.start();
+    }
+
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        return menuStatus;
     }
 
     private void openMenu(){
@@ -252,6 +281,8 @@ public class MenuFloatingActionButton extends ViewGroup{
     }
 
     private void showBackView(){
+        mBackView.setEnabled(true);
+        mBackView.setVisibility(VISIBLE);
         ObjectAnimator alpha = ObjectAnimator.ofFloat(mBackView,"alpha",0f,0.8f);
         alpha.setDuration(mAnimationDuration);
         alpha.setInterpolator(new LinearInterpolator());
@@ -263,6 +294,13 @@ public class MenuFloatingActionButton extends ViewGroup{
         alpha.setDuration(mAnimationDuration);
         alpha.setInterpolator(new LinearInterpolator());
         alpha.start();
+        alpha.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mBackView.setVisibility(GONE);
+                mBackView.setEnabled(false);
+            }
+        });
     }
 
     private void changeMenuStatus(){
@@ -343,6 +381,19 @@ public class MenuFloatingActionButton extends ViewGroup{
         this.mFabSrc = drawable;
     }
 
+
+    public void openFabMenu(){
+       openMenu();
+    }
+
+
+    public void rotateFab(){
+        rotateFabSrc();
+    }
+
+    public void setMenuEnable(boolean enable){
+        this.isMenuEnable = enable;
+    }
 
     //将px转dp
     private int px2Dp(int value) {

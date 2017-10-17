@@ -222,4 +222,5 @@ public class MenuView extends ViewGroup {
     protected void setCenterOfMainFabLeft(int centerOfMainFab){
         this.centerOfMainFabLeft = centerOfMainFab;
     }
+
 }
